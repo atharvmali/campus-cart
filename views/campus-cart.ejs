@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Campus Cart</title>
+    <%- include('./partials/responsive-styles') %>
     <style>
         /* General Reset */
         * {
@@ -225,6 +226,47 @@
         
         .cart-badge.hidden {
             display: none;
+        }
+
+        /* Responsive styles for Campus Cart */
+        @media (max-width: 992px) {
+            .items-grid {
+                grid-template-columns: repeat(3, 1fr);
+                width: 90%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .search-bar {
+                width: 100%;
+                margin-top: 15px;
+                order: 3;
+            }
+            
+            header {
+                flex-wrap: wrap;
+            }
+            
+            .items-grid {
+                grid-template-columns: repeat(2, 1fr);
+                width: 95%;
+                gap: 15px;
+            }
+            
+            .banner-img {
+                width: 95%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .items-grid {
+                grid-template-columns: 1fr;
+                padding: 10px;
+            }
+            
+            .item a img {
+                height: 130px;
+            }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">

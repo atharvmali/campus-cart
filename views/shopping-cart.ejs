@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shopping Cart - Campus Cart</title>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <%- include('./partials/responsive-styles') %>
     <style>
         /* General Reset */
         * {
@@ -386,6 +387,83 @@
         
         .submit-btn:hover {
             background-color: rgb(116, 45, 170);
+        }
+
+        /* Responsive styles for Shopping Cart */
+        @media (max-width: 992px) {
+            .cart-container {
+                flex-direction: column;
+            }
+            
+            .cart-summary {
+                margin-top: 20px;
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .cart-item {
+                flex-wrap: wrap;
+                position: relative;
+                padding-bottom: 45px;
+            }
+            
+            .remove-btn {
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+            }
+            
+            .item-image {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .checkout-form {
+                padding: 15px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+            }
+            
+            .form-group {
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .cart-item {
+                padding: 10px;
+            }
+            
+            .item-image {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .quantity-controls {
+                margin-top: 5px;
+            }
+            
+            .summary-title {
+                font-size: 16px;
+            }
+            
+            .summary-row {
+                font-size: 14px;
+            }
+            
+            .total-row {
+                font-size: 16px;
+            }
+            
+            .checkout-btn {
+                padding: 10px 0;
+                font-size: 14px;
+            }
         }
     </style>
 </head>

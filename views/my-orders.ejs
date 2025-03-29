@@ -18,9 +18,10 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 10px 50px;
+            padding: 10px 5%;
             background-color: #ffffff;
             border-bottom: 1px solid #e0d9d9;
+            flex-wrap: wrap;
         }
 
         .logo-container {
@@ -30,20 +31,21 @@
         }
 
         .CampusCartLogo {
-            height: 50px; 
+            height: 40px; 
         }
 
         header h1 {
             color: rgb(138, 54, 202);
             font-style: italic;
-            font-size: 24px;
+            font-size: 20px;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
         }
 
         /* Navigation Bar */
         .nav-bar {
             display: flex;
-            gap: 20px;
+            gap: 10px;
+            margin-top: 5px;
         }
 
         .nav-bar a {
@@ -52,7 +54,7 @@
             font-weight: bold;
             text-transform: uppercase;
             text-decoration: none;
-            padding: 10px;
+            padding: 8px;
             border-bottom: 3px solid transparent;
             transition: 0.3s;
         }
@@ -63,22 +65,23 @@
 
         /* Main Content */
         .container {
+            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 15px;
         }
 
         h1.page-title {
             text-align: center;
-            margin: 30px 0;
+            margin: 20px 0;
             color: #282c3f;
-            font-size: 32px;
+            font-size: 28px;
             font-weight: bold;
         }
 
         /* Orders */
         .orders-container {
-            margin-top: 30px;
+            margin-top: 20px;
         }
 
         .order-card {
@@ -91,32 +94,47 @@
 
         .order-header {
             background-color: #f5f5f7;
-            padding: 15px;
+            padding: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid #e0e0e0;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .order-id {
             font-weight: bold;
             color: #282c3f;
+            font-size: 14px;
         }
 
         .order-date {
             color: #888;
+            font-size: 13px;
         }
 
         .order-status {
-            padding: 5px 10px;
+            padding: 4px 8px;
             border-radius: 4px;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
+            white-space: nowrap;
         }
 
         .status-delivered {
             background-color: #e6f7ea;
             color: #267e3e;
+        }
+
+        .status-ready {
+            background-color: #e6f4fa;
+            color: #186fa2;
+        }
+
+        .status-cancelled {
+            background-color: #ffebee;
+            color: #c62828;
         }
 
         .status-processing {
@@ -125,7 +143,7 @@
         }
 
         .order-items {
-            padding: 15px;
+            padding: 12px;
         }
 
         .order-item {
@@ -133,6 +151,7 @@
             align-items: center;
             padding: 10px 0;
             border-bottom: 1px solid #f0f0f0;
+            flex-wrap: wrap;
         }
 
         .order-item:last-child {
@@ -140,18 +159,19 @@
         }
 
         .item-image {
-            width: 70px;
-            height: 70px;
+            width: 60px;
+            height: 60px;
             object-fit: contain;
             margin-right: 15px;
         }
 
         .item-details {
             flex-grow: 1;
+            min-width: 150px;
         }
 
         .item-name {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: bold;
             margin-bottom: 5px;
             color: #282c3f;
@@ -164,20 +184,26 @@
 
         .item-quantity {
             color: #888;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .order-footer {
             background-color: #f9f9f9;
-            padding: 15px;
+            padding: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-top: 1px solid #e0e0e0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .order-info {
+            font-size: 13px;
         }
 
         .order-total {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             color: #282c3f;
         }
@@ -199,13 +225,13 @@
 
         .no-orders {
             text-align: center;
-            padding: 50px 0;
+            padding: 30px 0;
         }
 
         .no-orders p {
             margin-bottom: 20px;
             color: #888;
-            font-size: 18px;
+            font-size: 16px;
         }
 
         .shop-now-btn {
@@ -214,43 +240,128 @@
             border: none;
             padding: 10px 20px;
             border-radius: 4px;
-            font-size: 16px;
+            font-size: 15px;
             cursor: pointer;
             text-decoration: none;
             display: inline-block;
+            transition: background-color 0.3s;
+        }
+
+        .shop-now-btn:hover {
+            background-color: rgb(116, 45, 170);
         }
 
         /* Footer */
         footer{
             background: #f5f5f7;
-            padding-left: 50px;
-            padding-right: 50px;
-            padding-bottom: 50px;
-            margin-top: 50px;
+            padding: 20px 5%;
+            margin-top: 30px;
         }
 
         .footer-container{
-            padding: 30px 0px 0px 0px;
+            padding: 20px 0 0 0;
             display: flex;
-            flex-direction:row;
-            justify-content: space-evenly;
-            flex-wrap:wrap;
+            flex-direction: row;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
         }
+        
         .footer-column{
             display: flex;
-            flex-direction:column;
+            flex-direction: column;
+            min-width: 150px;
+            margin-bottom: 15px;
         }
+        
         .footer-column h3{
             color: #282c3f;
             font-size: 14px;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             text-transform: uppercase;
         }
+        
         .footer-column a{
-            font-size: 15px;
+            font-size: 14px;
             color: #696b79;
             text-decoration: none;
             padding-bottom: 5px;
+            margin-bottom: 5px;
+        }
+
+        /* Media Queries for Responsiveness */
+        @media (max-width: 768px) {
+            header {
+                padding: 10px 3%;
+                justify-content: center;
+                text-align: center;
+            }
+            
+            .logo-container {
+                margin-bottom: 10px;
+            }
+            
+            .nav-bar {
+                width: 100%;
+                justify-content: center;
+                gap: 15px;
+            }
+            
+            h1.page-title {
+                font-size: 24px;
+                margin: 15px 0;
+            }
+            
+            .order-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .order-id, .order-date, .order-status {
+                margin-bottom: 5px;
+            }
+            
+            .item-image {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .footer-column {
+                width: 45%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .CampusCartLogo {
+                height: 35px;
+            }
+            
+            header h1 {
+                font-size: 18px;
+            }
+            
+            .nav-bar a {
+                font-size: 12px;
+                padding: 6px;
+            }
+            
+            .order-footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .order-total {
+                margin-top: 5px;
+            }
+            
+            .order-info {
+                width: 100%;
+                margin-bottom: 8px;
+            }
+            
+            .footer-column {
+                width: 100%;
+            }
         }
     </style>
 </head>
