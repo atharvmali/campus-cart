@@ -50,19 +50,45 @@ export const createOrder = async (req, res) => {
 // Get orders for a user
 export const getUserOrders = async (req, res) => {
     try {
-        const userId = req.body.userId;
-
+        // Use either the body userId, userData._id, or extract from authenticated user info
+        const userId = req.body.userId || (req.userData && req.userData._id);
+        
+        console.log("Request headers:", req.headers);
+        console.log("Request user data:", req.userData);
+        console.log("Request body:", req.body);
+        
         if (!userId) {
+            console.log("No userId found in request");
             return res.status(400).json({
                 success: false,
                 message: "User ID is required"
             });
         }
 
+        console.log("Searching for orders with userId:", userId);
+
         // Get orders from newest to oldest
         const orders = await orderModel.find({ userId })
             .sort({ createdAt: -1 })
             .lean();
+
+        console.log(`Found ${orders.length} orders for user ${userId}`);
+        
+        // If no orders found with userId, check if any guest orders exist with the same email
+        if (orders.length === 0 && req.userData && req.userData.email) {
+            console.log("No orders found with userId, checking for guest orders with email:", req.userData.email);
+            const guestOrders = await orderModel.find({ "customer.email": req.userData.email })
+                .sort({ createdAt: -1 })
+                .lean();
+                
+            if (guestOrders.length > 0) {
+                console.log(`Found ${guestOrders.length} guest orders for email ${req.userData.email}`);
+                return res.status(200).json({
+                    success: true,
+                    orders: guestOrders
+                });
+            }
+        }
 
         return res.status(200).json({
             success: true,

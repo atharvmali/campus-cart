@@ -392,66 +392,7 @@
 
         <!-- Orders List - This would be shown conditionally when there are orders -->
         <div class="orders-container" style="display: none;">
-            <!-- Sample Order - This would be generated dynamically from backend data -->
-            <div class="order-card">
-                <div class="order-header">
-                    <span class="order-id">Order #CC12345</span>
-                    <span class="order-date">May 15, 2023</span>
-                    <span class="order-status status-delivered">Delivered</span>
-                </div>
-                <div class="order-items">
-                    <!-- Sample Order Item -->
-                    <div class="order-item">
-                        <img src="/images/sample-product.jpg" alt="Product" class="item-image">
-                        <div class="item-details">
-                            <h3 class="item-name">Sample Product 1</h3>
-                            <p class="item-price">₹99.00</p>
-                            <p class="item-quantity">Quantity: 1</p>
-                        </div>
-                    </div>
-                    <!-- Another Sample Order Item -->
-                    <div class="order-item">
-                        <img src="/images/sample-product.jpg" alt="Product" class="item-image">
-                        <div class="item-details">
-                            <h3 class="item-name">Sample Product 2</h3>
-                            <p class="item-price">₹149.00</p>
-                            <p class="item-quantity">Quantity: 2</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="order-footer">
-                    <div class="order-total">Total: ₹397.00</div>
-                    <div class="order-actions">
-                        <button>View Details</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Another Sample Order -->
-            <div class="order-card">
-                <div class="order-header">
-                    <span class="order-id">Order #CC12346</span>
-                    <span class="order-date">May 20, 2023</span>
-                    <span class="order-status status-processing">Processing</span>
-                </div>
-                <div class="order-items">
-                    <!-- Sample Order Item -->
-                    <div class="order-item">
-                        <img src="/images/sample-product.jpg" alt="Product" class="item-image">
-                        <div class="item-details">
-                            <h3 class="item-name">Sample Product 3</h3>
-                            <p class="item-price">₹199.00</p>
-                            <p class="item-quantity">Quantity: 1</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="order-footer">
-                    <div class="order-total">Total: ₹199.00</div>
-                    <div class="order-actions">
-                        <button>View Details</button>
-                    </div>
-                </div>
-            </div>
+            <!-- Orders will be dynamically inserted here -->
         </div>
     </div>
 
@@ -479,6 +420,9 @@
     </footer>
 
     <script>
+        // Make user data available to client-side JavaScript
+        const userData = <% if (typeof userData !== 'undefined' && userData) { %><%- JSON.stringify(userData) %><% } else { %>null<% } %>;
+        
         async function handleLogout() {
             try {
                 const response = await fetch('/api/auth/logout', {
@@ -511,8 +455,12 @@
                 let response;
                 let email = localStorage.getItem('guestEmail');
                 
+                console.log("User data:", userData);
+                console.log("Guest email:", email);
+                
                 // Try to get orders based on authentication status
-                if (typeof userData !== 'undefined' && userData && userData._id) {
+                if (userData && userData._id) {
+                    console.log("Fetching orders for logged-in user with ID:", userData._id);
                     // Logged in user
                     response = await fetch('/api/order/user-orders', {
                         method: 'GET',
@@ -522,119 +470,153 @@
                         credentials: 'include'
                     });
                 } else if (email) {
+                    console.log("Fetching orders for guest user with email:", email);
                     // Guest user with email
                     response = await fetch(`/api/order/email/${email}`);
                 } else {
+                    console.log("No user ID or guest email found");
                     // No authentication and no guest email
                     noOrdersMessage.style.display = 'block';
                     ordersContainer.style.display = 'none';
                     return;
                 }
                 
+                if (!response.ok) {
+                    console.error(`API response status: ${response.status}`);
+                    const errorText = await response.text();
+                    console.error(`API error response: ${errorText}`);
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                
                 const result = await response.json();
+                console.log("API response:", result);
                 
                 if (!result.success || !result.orders || result.orders.length === 0) {
                     // No orders found
+                    console.log("No orders found");
                     noOrdersMessage.style.display = 'block';
                     ordersContainer.style.display = 'none';
+                    
+                    // Try a fallback - if logged in but no orders, try checking for guest orders
+                    if (userData && userData.email) {
+                        console.log("Trying fallback - checking for guest orders with email:", userData.email);
+                        const fallbackResponse = await fetch(`/api/order/email/${userData.email}`);
+                        
+                        if (fallbackResponse.ok) {
+                            const fallbackResult = await fallbackResponse.json();
+                            console.log("Fallback response:", fallbackResult);
+                            
+                            if (fallbackResult.success && fallbackResult.orders && fallbackResult.orders.length > 0) {
+                                // Found orders with email
+                                console.log(`Found ${fallbackResult.orders.length} orders with email fallback`);
+                                displayOrders(fallbackResult.orders, ordersContainer, noOrdersMessage);
+                                return;
+                            }
+                        }
+                    }
                     return;
                 }
                 
-                // Hide no orders message
-                noOrdersMessage.style.display = 'none';
-                ordersContainer.style.display = 'block';
-                
-                // Clear existing orders
-                ordersContainer.innerHTML = '';
-                
-                // Display orders
-                result.orders.forEach(order => {
-                    const orderDate = new Date(order.createdAt);
-                    const formattedDate = orderDate.toLocaleDateString('en-IN', { 
-                        day: 'numeric', 
-                        month: 'short', 
-                        year: 'numeric',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    });
-                    
-                    const orderElement = document.createElement('div');
-                    orderElement.className = 'order-card';
-                    
-                    // Order header
-                    const headerElement = document.createElement('div');
-                    headerElement.className = 'order-header';
-                    headerElement.innerHTML = `
-                        <span class="order-id">Order #${order._id.substring(order._id.length - 8)}</span>
-                        <span class="order-date">${formattedDate}</span>
-                        <span class="order-status ${getStatusClass(order.status)}">${capitalizeFirstLetter(order.status)}</span>
-                    `;
-                    
-                    // Order items
-                    const itemsElement = document.createElement('div');
-                    itemsElement.className = 'order-items';
-                    
-                    order.items.forEach(item => {
-                        const itemElement = document.createElement('div');
-                        itemElement.className = 'order-item';
-                        
-                        if (item.type === 'print') {
-                            // Print job
-                            itemElement.innerHTML = `
-                                <div class="item-image" style="display: flex; align-items: center; justify-content: center; background-color: #f0f7ff;">
-                                    <span style="font-size: 32px; color: #3b82f6;">🖨️</span>
-                                </div>
-                                <div class="item-details">
-                                    <div class="item-name">${item.name}</div>
-                                    <div class="item-price">₹${item.price.toFixed(2)}</div>
-                                    <div class="item-quantity">Files: ${item.details?.totalFiles || 1} | Pages: ${item.details?.totalPages || 1}</div>
-                                </div>
-                            `;
-                        } else {
-                            // Regular product
-                            const imagePath = getProductImagePath(item.name);
-                            itemElement.innerHTML = `
-                                <img src="${imagePath}" alt="${item.name}" class="item-image">
-                                <div class="item-details">
-                                    <div class="item-name">${item.name}</div>
-                                    <div class="item-price">₹${item.price.toFixed(2)}</div>
-                                    <div class="item-quantity">Qty: ${item.quantity || 1}</div>
-                                </div>
-                            `;
-                        }
-                        
-                        itemsElement.appendChild(itemElement);
-                    });
-                    
-                    // Order footer with pickup info
-                    const footerElement = document.createElement('div');
-                    footerElement.className = 'order-footer';
-                    footerElement.innerHTML = `
-                        <div class="order-info">
-                            <div><strong>Pickup:</strong> ${order.pickup.date} at ${order.pickup.time}</div>
-                            <div><strong>Payment:</strong> ${order.paymentMode === 'cash' ? 'Cash on Pickup' : 'UPI'}</div>
-                        </div>
-                        <div class="order-total">Total: ₹${order.total.toFixed(2)}</div>
-                    `;
-                    
-                    // Assemble order card
-                    orderElement.appendChild(headerElement);
-                    orderElement.appendChild(itemsElement);
-                    orderElement.appendChild(footerElement);
-                    
-                    // Add to orders container
-                    ordersContainer.appendChild(orderElement);
-                });
-                
-                // Save email for future reference
-                if (result.orders.length > 0 && result.orders[0].customer && result.orders[0].customer.email) {
-                    localStorage.setItem('guestEmail', result.orders[0].customer.email);
-                }
+                displayOrders(result.orders, ordersContainer, noOrdersMessage);
                 
             } catch (error) {
                 console.error('Failed to fetch orders:', error);
                 noOrdersMessage.style.display = 'block';
                 ordersContainer.style.display = 'none';
+            }
+        }
+        
+        // Function to display orders
+        function displayOrders(orders, container, noOrdersMessage) {
+            // Hide no orders message
+            noOrdersMessage.style.display = 'none';
+            container.style.display = 'block';
+            
+            // Clear existing orders
+            container.innerHTML = '';
+            
+            // Display orders
+            orders.forEach(order => {
+                const orderDate = new Date(order.createdAt);
+                const formattedDate = orderDate.toLocaleDateString('en-IN', { 
+                    day: 'numeric', 
+                    month: 'short', 
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                const orderElement = document.createElement('div');
+                orderElement.className = 'order-card';
+                
+                // Order header
+                const headerElement = document.createElement('div');
+                headerElement.className = 'order-header';
+                headerElement.innerHTML = `
+                    <span class="order-id">Order #${order._id.substring(order._id.length - 8)}</span>
+                    <span class="order-date">${formattedDate}</span>
+                    <span class="order-status ${getStatusClass(order.status)}">${capitalizeFirstLetter(order.status)}</span>
+                `;
+                
+                // Order items
+                const itemsElement = document.createElement('div');
+                itemsElement.className = 'order-items';
+                
+                order.items.forEach(item => {
+                    const itemElement = document.createElement('div');
+                    itemElement.className = 'order-item';
+                    
+                    if (item.type === 'print') {
+                        // Print job
+                        itemElement.innerHTML = `
+                            <div class="item-image" style="display: flex; align-items: center; justify-content: center; background-color: #f0f7ff;">
+                                <span style="font-size: 32px; color: #3b82f6;">🖨️</span>
+                            </div>
+                            <div class="item-details">
+                                <div class="item-name">${item.name}</div>
+                                <div class="item-price">₹${item.price.toFixed(2)}</div>
+                                <div class="item-quantity">Files: ${item.details?.totalFiles || 1} | Pages: ${item.details?.totalPages || 1}</div>
+                            </div>
+                        `;
+                    } else {
+                        // Regular product
+                        const imagePath = getProductImagePath(item.name);
+                        itemElement.innerHTML = `
+                            <img src="${imagePath}" alt="${item.name}" class="item-image">
+                            <div class="item-details">
+                                <div class="item-name">${item.name}</div>
+                                <div class="item-price">₹${item.price.toFixed(2)}</div>
+                                <div class="item-quantity">Qty: ${item.quantity || 1}</div>
+                            </div>
+                        `;
+                    }
+                    
+                    itemsElement.appendChild(itemElement);
+                });
+                
+                // Order footer with pickup info
+                const footerElement = document.createElement('div');
+                footerElement.className = 'order-footer';
+                footerElement.innerHTML = `
+                    <div class="order-info">
+                        <div><strong>Pickup:</strong> ${order.pickup.date} at ${order.pickup.time}</div>
+                        <div><strong>Payment:</strong> ${order.paymentMode === 'cash' ? 'Cash on Pickup' : 'UPI'}</div>
+                    </div>
+                    <div class="order-total">Total: ₹${order.total.toFixed(2)}</div>
+                `;
+                
+                // Assemble order card
+                orderElement.appendChild(headerElement);
+                orderElement.appendChild(itemsElement);
+                orderElement.appendChild(footerElement);
+                
+                // Add to orders container
+                container.appendChild(orderElement);
+            });
+            
+            // Save email for future reference if guest order
+            if (orders.length > 0 && orders[0].customer && orders[0].customer.email) {
+                localStorage.setItem('guestEmail', orders[0].customer.email);
             }
         }
         
