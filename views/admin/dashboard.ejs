@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Campus Cart</title>
+    <style>
+        body {
+            display: flex;
+            margin: 0;
+            flex-direction: column;
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            display: flex;
+            align-items: center;
+            background-color: #020101;
+            color: white;
+            padding: 10px 20px;
+            height: 60px;
+            width: 100%;
+        }
+        .navbar img {
+            height: 60px;
+            margin-right: 20px;
+        }
+        .navbar h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .main-container {
+            display: flex;
+            height: calc(100vh - 60px);
+        }
+        .sidebar {
+            width: 180px;
+            background-color: #020101;
+            color: white;
+            padding: 20px;
+            height: calc(100vh - 60px);
+            position: relative;
+        }
+        .sidebar h2 {
+            margin-bottom: 20px;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            margin: 10px 0;
+        }
+        .sidebar ul li a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            transition: background 0.3s;
+            border-radius: 4px;
+        }
+        .sidebar ul li a:hover {
+            background: #333;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+            background-color: #f5f5f7;
+        }
+        .user-info {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            font-size: 14px;
+        }
+        .user-info p {
+            margin: 5px 0;
+            color: #ddd;
+        }
+        .dashboard-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .summary-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .summary-card h3 {
+            margin-top: 0;
+            color: #333;
+        }
+        .summary-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #020101;
+            margin: 10px 0;
+        }
+        .welcome-message {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .welcome-message h2 {
+            margin-top: 0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <img src="/images/Campus Cart Logo.jpg" alt="Campus Cart Logo">
+        <h1>CAMPUS CART ADMIN</h1>
+    </div>
+    <div class="main-container">
+        <div class="sidebar">
+            <h2>Admin Panel</h2>
+            <ul>
+                <li><a href="/admin/dashboard">Dashboard</a></li>
+                <li><a href="/admin/products">Manage Products</a></li>
+                <li><a href="/admin/orders">Manage Orders</a></li>
+                <li><a href="/admin/users">Manage Users</a></li>
+                <li><a href="/admin/logout">Logout</a></li>
+            </ul>
+            <div class="user-info">
+                <p>Logged in as:</p>
+                <p><strong><%= userData.name %></strong></p>
+                <p><%= userData.email %></p>
+                <p>Role: <%= userData.role %></p>
+            </div>
+        </div>
+        <div class="content">
+            <div class="welcome-message">
+                <h2>Welcome, <%= userData.name %>!</h2>
+                <p>You're logged in as an administrator for Campus Cart. Use the sidebar navigation to manage products, orders, and users.</p>
+            </div>
+            
+            <div class="dashboard-summary">
+                <div class="summary-card">
+                    <h3>Total Products</h3>
+                    <div class="summary-value" id="product-count">--</div>
+                    <p>Active products in store</p>
+                </div>
+                <div class="summary-card">
+                    <h3>Total Orders</h3>
+                    <div class="summary-value" id="order-count">--</div>
+                    <p>Orders placed</p>
+                </div>
+                <div class="summary-card">
+                    <h3>Registered Users</h3>
+                    <div class="summary-value" id="user-count">--</div>
+                    <p>Active user accounts</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fetch dashboard data
+        document.addEventListener('DOMContentLoaded', async function() {
+            try {
+                // Fetch product count
+                const productResponse = await fetch('/api/products');
+                const productData = await productResponse.json();
+                if (productData.success) {
+                    document.getElementById('product-count').textContent = productData.products.length;
+                }
+
+                // Fetch order count
+                const orderResponse = await fetch('/api/admin/orders', {
+                    credentials: 'include'
+                });
+                const orderData = await orderResponse.json();
+                if (orderData.success) {
+                    document.getElementById('order-count').textContent = orderData.orders.length;
+                }
+
+                // Fetch user count
+                const userResponse = await fetch('/api/admin/users', {
+                    credentials: 'include'
+                });
+                const userData = await userResponse.json();
+                if (userData.success) {
+                    document.getElementById('user-count').textContent = userData.users.length;
+                }
+            } catch (error) {
+                console.error('Error fetching dashboard data:', error);
+            }
+        });
+    </script>
+</body>
+</html> 

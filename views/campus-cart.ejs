@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Cart</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Header Section */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 50px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #e0d9d9;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .CampusCartLogo {
+            height: 50px; 
+        }
+
+        header h1 {
+            color: rgb(138, 54, 202);
+            font-style: italic;
+            font-size: 24px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-bar a {
+            font-size: 14px;
+            color: #282c3f;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 10px;
+            border-bottom: 3px solid transparent;
+            transition: 0.3s;
+        }
+
+        .nav-bar a:hover {
+            border-bottom: 3px solid #f54e77;
+        }
+
+        /* Search Bar */
+        .search-bar{
+            height:40px;
+            min-width: 200px;
+            width: 30%;
+            display: flex;
+            align-items: center;
+        }
+        .search-icon{
+            box-sizing: content-box;
+            height: 20px;
+            padding: 10px;
+            background-color: #e2e2e3;
+            color: #282c3f;
+            font-weight: 300;
+            border-radius: 4px 0 0 4px;
+        }
+        .search-input{
+            background-color: #e2e2e3;
+            color: #696e79;
+            flex-grow: 1;
+            height: 40px;
+            border: none;
+            font-size: 16px;
+            border-radius: 0 4px 4px 0;
+        }
+
+        /* Banner Section */
+        .banner-container {
+            display: flex;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .banner-img {
+            width: 90%;
+            border-radius: 10px;
+        }
+
+        /* Items Grid */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin: 30px auto;
+            padding: 20px;
+            width: 80%;
+        }
+
+        .item {
+            text-align: center;
+            border-radius: 10px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            transition: 0.3s ease;
+        }
+
+        .item:hover {
+            background-color: #f0f0f0;
+        }
+
+        .item h3 {
+            color: #282c3f;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .item a img {
+            width: 100%;
+            height: 150px;
+            object-fit:fill;
+            border-radius: 5px;
+            transition: 0.3s ease-in-out;
+        }
+
+        .item a img:hover {
+            transform: scale(1.05);
+        }
+
+        /*Footer*/
+        footer{
+            background: #f5f5f7;
+            padding-left: 50px;
+            padding-right: 50px;
+            padding-bottom: 50px;
+        }
+
+        .footer-container{
+            padding: 30px 0px 0px 0px;
+            display: flex;
+            flex-direction:row;
+            justify-content: space-evenly;
+            flex-wrap:wrap;
+        }
+        .footer-column{
+            display: flex;
+            flex-direction:column;
+        }
+        .footer-column h3{
+            color: #282c3f;
+            font-size: 14px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+        .footer-column a{
+            font-size: 15px;
+            color: #696b79;
+            text-decoration: none;
+            padding-bottom: 5px;
+        }
+        .footer-img a img{
+            height: 40px;
+        }
+        .footer-column button{
+            border: 1px solid black;
+            background-color:black;
+            color:#ffffff;
+            border-radius: 5px;
+            height: 40px;
+            width: 150px;
+            font-size: smaller;
+        }
+        .footer-column button img{
+            height:25px;
+            float: left;
+        }
+        .footer-column div{
+            color: #696b79;
+        }
+        .footer-column div b{
+            color:black;
+        }
+        .footer-column div img{
+            height: 35px;  
+        }
+
+        .copyright{
+            display: flex;
+            flex-direction:row;
+            justify-content: space-between;
+            color:  #8d8e95;
+            border-bottom: 1px solid #e0d9d9;
+        }
+        .copyright a{
+            text-decoration: none;
+            color:#3e55bc;
+            font-weight: bold;
+        }
+
+        /* Cart badge styling */
+        .cart-badge {
+            display: inline-block;
+            background-color: #ff3e6c;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 12px;
+            margin-left: 5px;
+            min-width: 18px;
+            text-align: center;
+        }
+        
+        .cart-badge.hidden {
+            display: none;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <a href="/campus-cart"><img class="CampusCartLogo" src="/images/Campus Cart Logo.jpg" alt="Campus Cart Logo"></a>
+            <h1>Campus Cart</h1>
+        </div>     
+        <div class="search-bar">
+            <span class="material-symbols-outlined search-icon">search</span>            
+            <input class="search-input" type="text" placeholder="Search for products, brands and more">
+        </div>
+        <nav class="nav-bar">
+            <% if (typeof userData !== 'undefined' && userData) { %>
+                <a href="/dashboard"><%= userData.name %></a>
+                <a href="/shopping-cart" id="cart-link">My Cart <span id="cart-count" class="cart-badge">0</span></a>
+                <a href="/my-orders">My Orders</a>
+                <button onclick="handleLogout()" 
+                    class="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700">
+                    Logout
+                </button>
+            <% } else { %>
+                <button onclick="handleLogout()" 
+                    style="background-color: #ff3e6c; color: white; border: none; padding: 10px 15px; border-radius: 4px; cursor: pointer;">
+                    Logout
+                </button>
+                <a href="/shopping-cart" id="cart-link">My Cart <span id="cart-count" class="cart-badge">0</span></a>
+                <a href="/my-orders">My Orders</a>  
+            <% } %>
+        </nav>       
+    </header>
+
+    <main>
+        <div class="banner-container">
+            <img class="banner-img" src="/images/Banner.webp" alt="Main Banner">
+        </div>
+
+        <section class="items-grid">
+            <div class="item">
+                <h3>Printing & Xerox</h3>
+                <a href="/printing-xerox"><img src="/images/Printing & Xerox.jpg" alt="Printing & Xerox"></a>
+            </div>
+            <div class="item">
+                <h3>Stationery</h3>
+                <a href="/stationery"><img src="/images/Stationary.jpg" alt="Stationery"></a>
+            </div>
+            <div class="item">
+                <h3>Cold Drinks & Juice</h3>
+                <a href="/cold-drinks-juice"><img src="/images/Cold Drinks & Juice.jpg" alt="Cold Drinks & Juice"></a>
+            </div>
+            <div class="item">
+                <h3>Breakfast & Instant Food</h3>
+                <a href="/breakfast-instant-food"><img src="/images/Breakfast & Instant Food.jpg" alt="Breakfast & Instant Food"></a>
+            </div>
+            <div class="item">
+                <h3>Coffee & Tea</h3>
+                <a href="/coffee-tea"><img src="/images/Coffee & Tea.jpg" alt="Coffee & Tea"></a>
+            </div>
+            <div class="item">
+                <h3>Packed Food</h3>
+                <a href="/packed-food"><img src="/images/Packed Food.jpg" alt="Packed Food"></a>
+            </div>
+            <div class="item">
+                <h3>Chocolates & Candy</h3>
+                <a href="/chocolates-candy"><img src="/images/Chocolates & Candy.jpg" alt="Chocolates & Candy"></a>
+            </div>
+            <div class="item">
+                <h3>Ice Cream</h3>
+                <a href="/ice-cream"><img src="/images/Icecream.jpg" alt="Ice Cream"></a>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>USEFUL LINKS</h3>
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+                <a href="/delivery">Delivery</a>
+            </div>
+            
+            <div class="footer-column">
+                <h3>CATEGORIES</h3>
+                <a href="/printing-xerox">Printing & Xerox</a>
+                <a href="/stationery">Stationery</a>
+                <a href="/cold-drinks-juice">Cold Drink & Juice</a>
+                <a href="/breakfast-instant-food">Breakfast & Instant Food</a>
+                <a href="/coffee-tea">Coffee & Tea</a>
+                <a href="/packed-food">Packed Food</a>
+                <a href="/chocolates-candy">Chocolates & Candy</a>
+                <a href="/ice-cream">Icecream</a>
+            </div>
+        
+            <div class="footer-column">
+                <h3>Experience CampusCart on mobile</h3>
+                <div>
+                    <button>
+                        <img src="/images/google-play-logo.jpeg" alt="google-play-logo">
+                        <p>GET IT ON<br><span style="font-weight:bold;">Google Play</span></p>
+                    </button>
+                    <button>
+                        <img src="/images/mac-logo.jpg" alt="mac-logo">
+                        <p>Download on the <br><span style="font-weight:bold;">App Store </span></p>
+                    </button>
+                </div>
+                <br>
+                <h3>Keep in touch</h3>
+                <div class="footer-img">
+                    <a href="#"><img src="/images/Facebook-logo.jpeg" alt="Facebook-logo"></a>
+                    <a href="#"><img src="/images/Twitter-logo.png" alt="Twitter-logo"></a>
+                    <a href="#"><img src="/images/Youtube-logo.png" alt="Youtube-logo"></a>
+                    <a href="#"><img src="/images/Insta-logo.png" alt="Instagram-logo"></a>
+                </div>   
+            </div>            
+        </div>
+        <br><br>
+        <div class="copyright">
+            <p>In case of any concern, 
+                <a href="/contact">Contact Us</a></p>
+            <p>© CampusCart private limited</p>
+        </div>
+    </footer>
+
+    <script>
+        async function handleLogout() {
+            try {
+                const response = await fetch('/api/auth/logout', {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    window.location.href = '/login';
+                } else {
+                    alert(data.message || 'Logout failed');
+                }
+            } catch (error) {
+                alert('An error occurred during logout');
+            }
+        }
+        
+        // Update cart counter on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCounter();
+        });
+        
+        // Update cart counter function
+        function updateCartCounter() {
+            const cart = JSON.parse(localStorage.getItem("cart")) || [];
+            const cartCountElement = document.getElementById('cart-count');
+            
+            if (cart.length === 0) {
+                cartCountElement.classList.add('hidden');
+            } else {
+                // Count total items (considering quantities)
+                let totalItems = 0;
+                cart.forEach(item => {
+                    totalItems += item.quantity || 1;
+                });
+                
+                cartCountElement.textContent = totalItems;
+                cartCountElement.classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html> 

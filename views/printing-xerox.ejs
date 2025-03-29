@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Printing & Xerox - Campus Cart</title>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Header Section */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 50px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #e0d9d9;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .CampusCartLogo {
+            height: 50px; 
+        }
+
+        header h1 {
+            color: rgb(138, 54, 202);
+            font-style: italic;
+            font-size: 24px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-bar a {
+            font-size: 14px;
+            color: #282c3f;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 10px;
+            border-bottom: 3px solid transparent;
+            transition: 0.3s;
+        }
+
+        .nav-bar a:hover {
+            border-bottom: 3px solid #f54e77;
+        }
+
+        .nav-bar button {
+            background-color: #ff3e6c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* Print Store Specific Styles */
+        body {
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9fafb;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+
+        .print-header {
+            text-align: center;
+            padding: 1rem 0 2rem;
+        }
+
+        .print-header h2 {
+            font-size: 2.2rem;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .print-header p {
+            color: #6b7280;
+            font-size: 1.1rem;
+        }
+
+        /* Upload Section */
+        .upload-section {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 768px) {
+            .upload-section {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .file-upload {
+            border: 2px dashed #d1d5db;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.2s ease;
+            height: 100%;
+        }
+
+        .file-upload:hover {
+            border-color: #3b82f6;
+        }
+
+        .drop-zone {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 200px;
+        }
+
+        .upload-icon {
+            width: 3rem;
+            height: 3rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+
+        .drop-zone h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .drop-zone p {
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .browse-btn {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 0.3rem;
+            font-weight: 500;
+            transition: background-color 0.2s ease;
+            cursor: pointer;
+        }
+
+        .browse-btn:hover {
+            background-color: #2563eb;
+        }
+
+        .service-image {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Features Section */
+        .features-section {
+            margin-top: 3rem;
+        }
+
+        .features-section h2 {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: #1f2937;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .features {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .feature {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+
+        .feature-icon {
+            width: 3rem;
+            height: 3rem;
+            color: #3b82f6;
+            margin: 0 auto 1rem;
+        }
+
+        .feature h3 {
+            font-size: 1.2rem;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature p {
+            color: #6b7280;
+        }
+
+        /* Pricing Section */
+        .pricing-section {
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .pricing-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #1f2937;
+        }
+
+        .pricing-section p {
+            color: #6b7280;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .pricing-table th,
+        .pricing-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .pricing-table th {
+            background-color: #f3f4f6;
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .pricing-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Print Settings & Order Summary */
+        .order-summary {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-top: 2rem;
+        }
+
+        .order-summary h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #1f2937;
+        }
+
+        .summary-details {
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .summary-row:last-child {
+            border-bottom: none;
+            font-weight: bold;
+        }
+
+        .checkout-btn {
+            background-color: #3b82f6;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.3rem;
+            font-weight: 500;
+            font-size: 1rem;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .checkout-btn:hover {
+            background-color: #2563eb;
+        }
+
+        /* File Card Styles */
+        .file-item {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .file-item-header {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .file-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            margin-right: 1rem;
+            color: #6b7280;
+        }
+
+        .file-details {
+            flex-grow: 1;
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.25rem;
+        }
+
+        .file-size {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        .file-item-body {
+            padding: 1rem;
+        }
+
+        .print-settings {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .print-settings {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .setting-group {
+            margin-bottom: 1rem;
+        }
+
+        .setting-group label {
+            display: block;
+            font-weight: 500;
+            color: #4b5563;
+            margin-bottom: 0.5rem;
+        }
+
+        .setting-group select,
+        .setting-group input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.25rem;
+            background-color: #f9fafb;
+        }
+
+        .remove-file-btn {
+            background-color: #ef4444;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .remove-file-btn:hover {
+            background-color: #dc2626;
+        }
+
+        /* Footer */
+        footer{
+            background: #f5f5f7;
+            padding-left: 50px;
+            padding-right: 50px;
+            padding-bottom: 50px;
+            margin-top: 3rem;
+        }
+
+        .footer-container{
+            padding: 30px 0px 0px 0px;
+            display: flex;
+            flex-direction:row;
+            justify-content: space-evenly;
+            flex-wrap:wrap;
+        }
+        .footer-column{
+            display: flex;
+            flex-direction:column;
+        }
+        .footer-column h3{
+            color: #282c3f;
+            font-size: 14px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+        .footer-column a{
+            font-size: 15px;
+            color: #696b79;
+            text-decoration: none;
+            padding-bottom: 5px;
+        }
+        .footer-img a img{
+            height: 40px;
+        }
+        .footer-column button{
+            border: 1px solid black;
+            background-color:black;
+            color:#ffffff;
+            border-radius: 5px;
+            height: 40px;
+            width: 150px;
+            font-size: smaller;
+        }
+        .footer-column button img{
+            height:25px;
+            float: left;
+        }
+        .footer-column div{
+            color: #696b79;
+        }
+        .footer-column div b{
+            color:black;
+        }
+        .footer-column div img{
+            height: 35px;  
+        }
+
+        .copyright{
+            display: flex;
+            flex-direction:row;
+            justify-content: space-between;
+            color:  #8d8e95;
+            border-bottom: 1px solid #e0d9d9;
+        }
+        .copyright a{
+            text-decoration: none;
+            color:#3e55bc;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <a href="/campus-cart"><img class="CampusCartLogo" src="/images/Campus Cart Logo.jpg" alt="Campus Cart Logo"></a>
+            <h1>Campus Cart</h1>
+        </div>     
+        <nav class="nav-bar">
+            <% if (typeof userData !== 'undefined' && userData) { %>
+                <a href="/dashboard"><%= userData.name %></a>
+                <a href="/shopping-cart">My Cart</a>
+                <a href="/my-orders">My Orders</a>
+                <button onclick="handleLogout()">Logout</button>
+            <% } else { %>
+                <button onclick="handleLogout()">Logout</button>
+                <a href="/shopping-cart">My Cart</a>
+                <a href="/my-orders">My Orders</a>  
+            <% } %>
+        </nav>       
+    </header>
+
+    <div class="container">
+        <div class="print-header">
+            <h2>Print Store</h2>
+            <p>Professional printing and photocopying services</p>
+        </div>
+
+        <div class="upload-section">
+            <div class="file-upload-container">
+                <div class="file-upload" id="file-upload">
+                    <div class="drop-zone">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="upload-icon">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                        </svg>
+                        <h3>Drag & Drop Files Here</h3>
+                        <p>or click to browse your files</p>
+                        <input type="file" id="file-input" multiple accept=".pdf,image/*" class="file-input" />
+                        <button class="browse-btn">Browse Files</button>
+                    </div>
+                </div>
+            </div>
+            <div class="upload-image">
+                <img 
+                src="/images/Printing & Xerox.jpg"
+                alt="Professional Printing Service"
+                class="service-image"
+                />
+            </div>
+        </div>
+
+        <div class="files-container" id="files-container">
+            <!-- Files will be added here dynamically -->
+        </div>
+
+        <div class="order-summary" id="order-summary" style="display: none;">
+            <h2>Order Summary</h2>
+            <div class="summary-details">
+                <div class="summary-row">
+                    <span>Total Files:</span>
+                    <span id="total-files">0</span>
+                </div>
+                <div class="summary-row">
+                    <span>Total Pages:</span>
+                    <span id="total-pages">0</span>
+                </div>
+                <div class="summary-row">
+                    <span>Estimated Cost:</span>
+                    <span id="total-cost">₹0.00</span>
+                </div>
+            </div>
+            <button class="checkout-btn" id="checkout-btn">Place Order</button>
+        </div>
+
+        <div class="features-section">
+            <h2>Why Choose Our Printing Services?</h2>
+            <div class="features">
+                <div class="feature">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="feature-icon">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    <h3>Fast Delivery</h3>
+                    <p>No need to wait in line just order and pick up your order.</p>
+                </div>
+                <div class="feature">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="feature-icon">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                    <h3>High Quality</h3>
+                    <p>Professional grade paper and printing equipment for best results.</p>
+                </div>
+                <div class="feature">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="feature-icon">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <h3>Affordable Pricing</h3>
+                    <p>Competitive rates with volume discounts available.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="pricing-section">
+            <h2>Our Pricing</h2>
+            <p>Simple and transparent pricing for all your printing needs.</p>
+
+            <table class="pricing-table">
+                <thead>
+                    <tr>
+                        <th>Service</th>
+                        <th>Price (per page)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Black & White (Single Sided)</td>
+                        <td>₹2.00</td>
+                    </tr>
+                    <tr>
+                        <td>Black & White (Double Sided)</td>
+                        <td>₹4.00</td>
+                    </tr>
+                    <tr>
+                        <td>Color Print (Single Sided)</td>
+                        <td>₹10.00</td>
+                    </tr>
+                    <tr>
+                        <td>Color Print (Double Sided)</td>
+                        <td>₹20.00</td>
+                    </tr>
+                    <tr>
+                        <td>Premium Paper (Extra)</td>
+                        <td>₹5.00</td>
+                    </tr>
+                   
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>USEFUL LINKS</h3>
+                <a href="/about">About</a>
+                <a href="/contact">Contact</a>
+                <a href="/delivery">Delivery</a>
+            </div>
+            
+            <div class="footer-column">
+                <h3>CATEGORIES</h3>
+                <a href="/printing-xerox">Printing & Xerox</a>
+                <a href="/stationery">Stationery</a>
+                <a href="/cold-drinks-juice">Cold Drink & Juice</a>
+                <a href="/breakfast-instant-food">Breakfast & Instant Food</a>
+                <a href="/coffee-tea">Coffee & Tea</a>
+                <a href="/packed-food">Packed Food</a>
+                <a href="/chocolates-candy">Chocolates & Candy</a>
+                <a href="/ice-cream">Icecream</a>
+            </div>
+        
+            <div class="footer-column">
+                <h3>Experience CampusCart on mobile</h3>
+                <div>
+                    <button>
+                        <img src="/images/google-play-logo.jpeg" alt="google-play-logo">
+                        <p>GET IT ON<br><span style="font-weight:bold;">Google Play</span></p>
+                    </button>
+                    <button>
+                        <img src="/images/mac-logo.jpg" alt="mac-logo">
+                        <p>Download on the <br><span style="font-weight:bold;">App Store </span></p>
+                    </button>
+                </div>
+                <br>
+                <h3>Keep in touch</h3>
+                <div class="footer-img">
+                    <a href="#"><img src="/images/Facebook-logo.jpeg" alt="Facebook-logo"></a>
+                    <a href="#"><img src="/images/Twitter-logo.png" alt="Twitter-logo"></a>
+                    <a href="#"><img src="/images/Youtube-logo.png" alt="Youtube-logo"></a>
+                    <a href="#"><img src="/images/Insta-logo.png" alt="Instagram-logo"></a>
+                </div>   
+            </div>            
+        </div>
+        <br><br>
+        <div class="copyright">
+            <p>In case of any concern, 
+                <a href="/contact">Contact Us</a></p>
+            <p>© CampusCart private limited</p>
+        </div>
+    </footer>
+
+    <!-- Include PDF.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.min.js"></script>
+    <script>
+        // Initialize PDF.js worker
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.12.313/pdf.worker.min.js';
+    </script>
+
+    <script>
+        // Constants and configuration
+        const PRICING = {
+            singleBW: 2,      // 2 rupees for black and white single page
+            doubleBW: 4,      // 4 rupees for black and white double-sided
+            singleColor: 10,  // 10 rupees for color single page
+            doubleColor: 20,  // 20 rupees for color double-sided
+            premiumPaperExtra: 5,  // 5 rupees extra for premium paper per page
+        };
+
+        // Store files with their settings
+        let files = [];
+
+        // Default print settings
+        const defaultSettings = {
+            copies: 1,
+            color: 'bw',
+            orientation: 'portrait',
+            doubleSided: false,
+            paperType: 'standard'
+        };
+
+        // DOM elements
+        const fileUploadElement = document.getElementById('file-upload');
+        const fileInputElement = document.getElementById('file-input');
+        const browseButton = document.querySelector('.browse-btn');
+        const filesContainer = document.getElementById('files-container');
+        const orderSummaryElement = document.getElementById('order-summary');
+        const totalFilesElement = document.getElementById('total-files');
+        const totalPagesElement = document.getElementById('total-pages');
+        const totalCostElement = document.getElementById('total-cost');
+        const checkoutButton = document.getElementById('checkout-btn');
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            // File drag and drop events
+            fileUploadElement.addEventListener('dragover', handleDragOver);
+            fileUploadElement.addEventListener('dragleave', handleDragLeave);
+            fileUploadElement.addEventListener('drop', handleFileDrop);
+            
+            // File input click events
+            browseButton.addEventListener('click', () => fileInputElement.click());
+            fileInputElement.addEventListener('change', handleFileInputChange);
+            
+            // Checkout button
+            checkoutButton.addEventListener('click', handleCheckout);
+        });
+
+        // Basic drag and drop functionality
+        function handleDragOver(e) {
+            e.preventDefault();
+            fileUploadElement.style.borderColor = '#3b82f6';
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            fileUploadElement.style.borderColor = '#d1d5db';
+        }
+
+        function handleFileDrop(e) {
+            e.preventDefault();
+            fileUploadElement.style.borderColor = '#d1d5db';
+            
+            const newFiles = Array.from(e.dataTransfer.files);
+            processFiles(newFiles);
+        }
+
+        function handleFileInputChange(e) {
+            const newFiles = Array.from(e.target.files);
+            processFiles(newFiles);
+            
+            // Reset the input to allow selecting the same file again
+            fileInputElement.value = '';
+        }
+
+        // Process and add files
+        async function processFiles(newFiles) {
+            try {
+                for (const file of newFiles) {
+                    // Skip empty files
+                    if (file.size === 0) continue;
+                    
+                    // Get page count (especially for PDFs)
+                    const pageCount = await getPageCount(file);
+                    
+                    // Add to our files array
+                    files.push({
+                        id: `file-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
+                        pageCount: pageCount,
+                        settings: { ...defaultSettings }
+                    });
+                }
+                
+                // Render files and update summary
+                renderFiles();
+                updateOrderSummary();
+            } catch (error) {
+                console.error('Error processing files:', error);
+                alert('There was an error processing your files. Please try again.');
+            }
+        }
+
+        // Get accurate page count, especially for PDFs
+        async function getPageCount(file) {
+            // For PDFs, use PDF.js to get actual page count
+            if (file.type === 'application/pdf') {
+                try {
+                    const arrayBuffer = await file.arrayBuffer();
+                    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                    return pdf.numPages;
+                } catch (error) {
+                    console.error('Error parsing PDF:', error);
+                    // Fallback to a simple estimate if PDF parsing fails
+                    return Math.max(1, Math.ceil(file.size / 102400));
+                }
+            } else if (file.type.startsWith('image/')) {
+                return 1; // Each image is one page
+            }
+            return 1; // Default to 1 page for other file types
+        }
+
+        // Estimate page count based on file size (keeping as backup)
+        function estimatePageCount(file) {
+            // This is a very rough estimation
+            if (file.type === 'application/pdf') {
+                // Roughly estimate 100KB per page
+                return Math.max(1, Math.ceil(file.size / 102400));
+            } else if (file.type.startsWith('image/')) {
+                return 1; // Each image is one page
+            }
+            return 1; // Default to 1 page
+        }
+
+        // Render files in the UI
+        function renderFiles() {
+            // Clear container first
+            filesContainer.innerHTML = '';
+            
+            if (files.length === 0) {
+                orderSummaryElement.style.display = 'none';
+                return;
+            }
+            
+            // Add file heading if we have files
+            const heading = document.createElement('h3');
+            heading.textContent = 'Your Files';
+            heading.style.marginTop = '2rem';
+            heading.style.marginBottom = '1rem';
+            filesContainer.appendChild(heading);
+            
+            // Create file cards
+            files.forEach(file => {
+                const fileCard = createFileCard(file);
+                filesContainer.appendChild(fileCard);
+            });
+            
+            // Show order summary
+            orderSummaryElement.style.display = 'block';
+        }
+
+        // Create file card with options
+        function createFileCard(file) {
+            const fileCard = document.createElement('div');
+            fileCard.className = 'file-item';
+            fileCard.dataset.id = file.id;
+            
+            // File header
+            const header = document.createElement('div');
+            header.className = 'file-item-header';
+            
+            const fileIcon = document.createElement('div');
+            fileIcon.className = 'file-icon';
+            fileIcon.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+            `;
+            
+            const details = document.createElement('div');
+            details.className = 'file-details';
+            
+            const fileName = document.createElement('div');
+            fileName.className = 'file-name';
+            fileName.textContent = file.name;
+            
+            const fileSize = document.createElement('div');
+            fileSize.className = 'file-size';
+            fileSize.textContent = formatFileSize(file.size);
+            
+            details.appendChild(fileName);
+            details.appendChild(fileSize);
+            
+            header.appendChild(fileIcon);
+            header.appendChild(details);
+            
+            // File body with settings
+            const body = document.createElement('div');
+            body.className = 'file-item-body';
+            
+            // Settings form
+            const settings = document.createElement('div');
+            settings.className = 'print-settings';
+            
+            // Copies setting
+            const copiesGroup = document.createElement('div');
+            copiesGroup.className = 'setting-group';
+            
+            const copiesLabel = document.createElement('label');
+            copiesLabel.textContent = 'Number of Copies:';
+            copiesLabel.htmlFor = `copies-${file.id}`;
+            
+            const copiesInput = document.createElement('input');
+            copiesInput.type = 'number';
+            copiesInput.id = `copies-${file.id}`;
+            copiesInput.min = 1;
+            copiesInput.value = file.settings.copies;
+            copiesInput.addEventListener('change', e => {
+                file.settings.copies = parseInt(e.target.value);
+                updateOrderSummary();
+            });
+            
+            copiesGroup.appendChild(copiesLabel);
+            copiesGroup.appendChild(copiesInput);
+            
+            // Color setting
+            const colorGroup = document.createElement('div');
+            colorGroup.className = 'setting-group';
+            
+            const colorLabel = document.createElement('label');
+            colorLabel.textContent = 'Print Color:';
+            colorLabel.htmlFor = `color-${file.id}`;
+            
+            const colorSelect = document.createElement('select');
+            colorSelect.id = `color-${file.id}`;
+            colorSelect.innerHTML = `
+                <option value="bw" ${file.settings.color === 'bw' ? 'selected' : ''}>Black & White</option>
+                <option value="color" ${file.settings.color === 'color' ? 'selected' : ''}>Color</option>
+            `;
+            colorSelect.addEventListener('change', e => {
+                file.settings.color = e.target.value;
+                updateOrderSummary();
+            });
+            
+            colorGroup.appendChild(colorLabel);
+            colorGroup.appendChild(colorSelect);
+            
+            // Orientation setting
+            const orientationGroup = document.createElement('div');
+            orientationGroup.className = 'setting-group';
+            
+            const orientationLabel = document.createElement('label');
+            orientationLabel.textContent = 'Orientation:';
+            orientationLabel.htmlFor = `orientation-${file.id}`;
+            
+            const orientationSelect = document.createElement('select');
+            orientationSelect.id = `orientation-${file.id}`;
+            orientationSelect.innerHTML = `
+                <option value="portrait" ${file.settings.orientation === 'portrait' ? 'selected' : ''}>Portrait</option>
+                <option value="landscape" ${file.settings.orientation === 'landscape' ? 'selected' : ''}>Landscape</option>
+            `;
+            orientationSelect.addEventListener('change', e => {
+                file.settings.orientation = e.target.value;
+                updateOrderSummary();
+            });
+            
+            orientationGroup.appendChild(orientationLabel);
+            orientationGroup.appendChild(orientationSelect);
+            
+            // Double-sided setting
+            const sidedGroup = document.createElement('div');
+            sidedGroup.className = 'setting-group';
+            
+            const sidedLabel = document.createElement('label');
+            sidedLabel.textContent = 'Printing Type:';
+            sidedLabel.htmlFor = `sided-${file.id}`;
+            
+            const sidedSelect = document.createElement('select');
+            sidedSelect.id = `sided-${file.id}`;
+            sidedSelect.innerHTML = `
+                <option value="false" ${file.settings.doubleSided === false ? 'selected' : ''}>Single-sided</option>
+                <option value="true" ${file.settings.doubleSided === true ? 'selected' : ''}>Double-sided</option>
+            `;
+            sidedSelect.addEventListener('change', e => {
+                file.settings.doubleSided = e.target.value === 'true';
+                updateOrderSummary();
+            });
+            
+            sidedGroup.appendChild(sidedLabel);
+            sidedGroup.appendChild(sidedSelect);
+            
+            // Paper type setting
+            const paperGroup = document.createElement('div');
+            paperGroup.className = 'setting-group';
+            
+            const paperLabel = document.createElement('label');
+            paperLabel.textContent = 'Paper Type:';
+            paperLabel.htmlFor = `paper-${file.id}`;
+            
+            const paperSelect = document.createElement('select');
+            paperSelect.id = `paper-${file.id}`;
+            paperSelect.innerHTML = `
+                <option value="standard" ${file.settings.paperType === 'standard' ? 'selected' : ''}>Standard</option>
+                <option value="premium" ${file.settings.paperType === 'premium' ? 'selected' : ''}>Premium (+₹5/page)</option>
+            `;
+            paperSelect.addEventListener('change', e => {
+                file.settings.paperType = e.target.value;
+                updateOrderSummary();
+            });
+            
+            paperGroup.appendChild(paperLabel);
+            paperGroup.appendChild(paperSelect);
+            
+            // Remove file button
+            const removeBtn = document.createElement('button');
+            removeBtn.className = 'remove-file-btn';
+            removeBtn.textContent = 'Remove File';
+            removeBtn.addEventListener('click', () => {
+                removeFile(file.id);
+            });
+            
+            // Add all settings to form
+            settings.appendChild(copiesGroup);
+            settings.appendChild(colorGroup);
+            settings.appendChild(orientationGroup);
+            settings.appendChild(sidedGroup);
+            settings.appendChild(paperGroup);
+            
+            body.appendChild(settings);
+            body.appendChild(removeBtn);
+            
+            // Assemble file card
+            fileCard.appendChild(header);
+            fileCard.appendChild(body);
+            
+            return fileCard;
+        }
+
+        // Remove a file
+        function removeFile(fileId) {
+            files = files.filter(file => file.id !== fileId);
+            renderFiles();
+            updateOrderSummary();
+        }
+
+        // Update order summary
+        function updateOrderSummary() {
+            if (files.length === 0) {
+                orderSummaryElement.style.display = 'none';
+                return;
+            }
+            
+            let totalFiles = files.length;
+            let totalPages = 0;
+            let totalCost = 0;
+            
+            files.forEach(file => {
+                const pageCount = file.pageCount * file.settings.copies;
+                totalPages += pageCount;
+                
+                // Calculate cost based on settings
+                let pageCost;
+                if (file.settings.color === 'color') {
+                    pageCost = file.settings.doubleSided ? PRICING.doubleColor : PRICING.singleColor;
+                } else {
+                    pageCost = file.settings.doubleSided ? PRICING.doubleBW : PRICING.singleBW;
+                }
+                
+                // Add premium paper cost if selected
+                if (file.settings.paperType === 'premium') {
+                    pageCost += PRICING.premiumPaperExtra;
+                }
+                
+                totalCost += pageCount * pageCost;
+            });
+            
+            // Apply volume discount if applicable
+            let discount = 0;
+            if (totalPages >= 1000) {
+                discount = 0.15; // 15% off for 1000+ pages
+            } else if (totalPages >= 500) {
+                discount = 0.10; // 10% off for 500+ pages
+            } else if (totalPages >= 100) {
+                discount = 0.05; // 5% off for 100+ pages
+            }
+            
+            if (discount > 0) {
+                totalCost = totalCost * (1 - discount);
+            }
+            
+            // Update UI
+            totalFilesElement.textContent = totalFiles;
+            totalPagesElement.textContent = totalPages;
+            totalCostElement.textContent = `₹${totalCost.toFixed(2)}`;
+            
+            orderSummaryElement.style.display = 'block';
+        }
+
+        // Handle checkout process
+        function handleCheckout() {
+            if (files.length === 0) {
+                alert('Please add at least one file to place an order.');
+                return;
+            }
+            
+            // Get cart from localStorage
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            
+            // Calculate total cost and create cart item
+            let totalPages = 0;
+            let totalCost = 0;
+            
+            // Build file details for the order
+            const fileDetails = files.map(file => {
+                const pageCount = file.pageCount * file.settings.copies;
+                totalPages += pageCount;
+                
+                // Calculate cost based on settings
+                let pageCost;
+                if (file.settings.color === 'color') {
+                    pageCost = file.settings.doubleSided ? PRICING.doubleColor : PRICING.singleColor;
+                } else {
+                    pageCost = file.settings.doubleSided ? PRICING.doubleBW : PRICING.singleBW;
+                }
+                
+                // Add premium paper cost if selected
+                if (file.settings.paperType === 'premium') {
+                    pageCost += PRICING.premiumPaperExtra;
+                }
+                
+                const fileCost = pageCount * pageCost;
+                totalCost += fileCost;
+                
+                return {
+                    name: file.name,
+                    pageCount: file.pageCount,
+                    copies: file.settings.copies,
+                    color: file.settings.color,
+                    doubleSided: file.settings.doubleSided,
+                    paperType: file.settings.paperType,
+                    orientation: file.settings.orientation,
+                    cost: fileCost
+                };
+            });
+            
+            // Apply volume discount if applicable
+            let discount = 0;
+            if (totalPages >= 1000) {
+                discount = 0.15; // 15% off for 1000+ pages
+            } else if (totalPages >= 500) {
+                discount = 0.10; // 10% off for 500+ pages
+            } else if (totalPages >= 100) {
+                discount = 0.05; // 5% off for 100+ pages
+            }
+            
+            if (discount > 0) {
+                totalCost = totalCost * (1 - discount);
+            }
+            
+            // Create a print job cart item
+            const printJob = {
+                name: `Print Job (${files.length} files, ${totalPages} pages)`,
+                price: parseFloat(totalCost.toFixed(2)),
+                quantity: 1,
+                type: 'print',
+                details: {
+                    files: fileDetails,
+                    totalFiles: files.length,
+                    totalPages: totalPages,
+                    discount: discount
+                }
+            };
+            
+            // Add to cart
+            cart.push(printJob);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            
+            alert('Print job added to your cart!');
+            
+            // Reset after adding to cart
+            files = [];
+            renderFiles();
+            updateOrderSummary();
+            
+            // Redirect to cart page
+            window.location.href = "/shopping-cart";
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        async function handleLogout() {
+            try {
+                const response = await fetch('/api/auth/logout', {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    window.location.href = '/login';
+                } else {
+                    alert(data.message || 'Logout failed');
+                }
+            } catch (error) {
+                alert('An error occurred during logout');
+            }
+        }
+    </script>
+</body>
+</html> 
