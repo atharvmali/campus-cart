@@ -42,8 +42,8 @@ Campus Cart is a web application designed to simplify shopping for students on c
 
 1. Clone the repository
    ```
-   git clone https://github.com/your-username/campus-cart.git
-   cd campus-cart/auth
+   git clone https://github.com/atharvmali/campus-cart.git
+   cd campus-cart
    ```
 
 2. Install dependencies
